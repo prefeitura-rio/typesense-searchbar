@@ -4,6 +4,7 @@ import { XIcon, ArrowRightIcon } from 'lucide-react';
 
 type SearchResultItem = {
   titulo: string;
+  descricao: string;
 };
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         const response = await fetch(`/api/search?q=${e.target.value}`);
         const data = await response.json();
         setResults(data.result || []);
+        console.log('Search results:', data.result);
       } catch (error) {
         console.error('Error fetching search results:', error);
         setResults([]);
@@ -36,13 +38,17 @@ export default function Home() {
     setResults([]);
   };
 
+  const handleAdvancedSearch = () => {
+    window.open(`https://prefeitura.rio/buscaavancada?q=${encodeURIComponent(query)}`, '_blank');
+  };
+
   return (
     <div className="relative">
       {/* Fixed Header */}
       <div className="fixed top-0 left-0 w-full bg-cover bg-center z-50" style={{ backgroundImage: "url('./header.png')", height: '220px' }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-          <h1 className="text-3xl font-bold mb-4 text-center">A Prefeitura do Rio mais perto de você</h1>
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white mx-2">
+          <h1 className="text-xl mx-10 md:text-3xl font-bold mb-4 text-center">A Prefeitura do Rio mais perto de você</h1>
           <div className="relative w-full max-w-md">
             <input
               type="text"
@@ -72,14 +78,22 @@ export default function Home() {
                   ) : (
                     results.map((item, index) => (
                       <li key={index} className="p-3 hover:bg-gray-100 cursor-pointer">
-                        {item.titulo}
+                        <div>
+                          <strong>{item.titulo}</strong>
+                          <p className='text-sm text-gray-500'>
+                            {item.descricao.length > 50 ? `${item.descricao.substring(0, 60)}...` : item.descricao}
+                          </p>
+                        </div>
                       </li>
                     ))
                   )}
                 </ul>
 
                 {/* Fixed Bottom Button */}
-                <button className="w-full cursor-pointer bg-[#12bbef] text-white p-3 text-center rounded-b-md font-medium hover:bg-blue-700 flex justify-between items-center">
+                <button
+                  onClick={handleAdvancedSearch}
+                  className="w-full cursor-pointer bg-[#12bbef] text-white p-3 text-center rounded-b-md font-medium hover:bg-black hover:text-white transition-all duration-300 flex justify-between items-center"
+                >
                   <span>Busca Avançada</span>
                   <ArrowRightIcon className="h-5 w-5" />
                 </button>
