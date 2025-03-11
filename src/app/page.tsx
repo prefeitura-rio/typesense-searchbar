@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { XIcon } from 'lucide-react';
+import { XIcon, ArrowRightIcon } from 'lucide-react';
 
 type SearchResultItem = {
   titulo: string;
@@ -48,7 +48,7 @@ export default function Home() {
               type="text"
               value={query}
               onChange={handleSearch}
-              className="w-full p-3 border text-black border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+              className="w-full p-3 border text-black border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#12bbef] pr-10"
               placeholder="O que você procura?"
             />
             {/* X Icon to Clear Search */}
@@ -79,8 +79,9 @@ export default function Home() {
                 </ul>
 
                 {/* Fixed Bottom Button */}
-                <button className="w-full bg-blue-600 text-white p-3 text-center rounded-b-md font-medium hover:bg-blue-700">
-                  Busca Avançada
+                <button className="w-full cursor-pointer bg-[#12bbef] text-white p-3 text-center rounded-b-md font-medium hover:bg-blue-700 flex justify-between items-center">
+                  <span>Busca Avançada</span>
+                  <ArrowRightIcon className="h-5 w-5" />
                 </button>
               </div>
             )}
