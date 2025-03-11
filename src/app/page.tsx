@@ -1,10 +1,11 @@
 'use client'
 import { useState } from 'react';
-import { XIcon, ArrowRightIcon } from 'lucide-react';
+import { XIcon, ArrowRightIcon, ExternalLinkIcon } from 'lucide-react';
 
 type SearchResultItem = {
   titulo: string;
   descricao: string;
+  link_acesso?: string;
 };
 
 export default function Home() {
@@ -63,7 +64,7 @@ export default function Home() {
                 onClick={clearSearch}
                 className="absolute inset-y-0 right-3 flex items-center"
               >
-                <XIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition" />
+                <XIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition" style={{ width: '20px', height: '20px' }} />
               </button>
             )}
 
@@ -77,12 +78,23 @@ export default function Home() {
                     </div>
                   ) : (
                     results.map((item, index) => (
-                      <li key={index} className="p-3 hover:bg-gray-100 cursor-pointer">
-                        <div>
+                      <li
+                        key={index}
+                        className="p-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
+                        onClick={() => {
+                          if (item.link_acesso) {
+                            window.open(item.link_acesso, '_blank');
+                          }
+                        }}
+                      >
+                        <div className="mr-4">
                           <strong>{item.titulo}</strong>
                           <p className='text-sm text-gray-500'>
-                            {item.descricao.length > 50 ? `${item.descricao.substring(0, 60)}...` : item.descricao}
+                            {item.descricao.length > 50 ? `${item.descricao.substring(0, 50)}...` : item.descricao}
                           </p>
+                        </div>
+                        <div style={{ width: '20px', height: '20px' }}>
+                          <ExternalLinkIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition" />
                         </div>
                       </li>
                     ))
@@ -95,7 +107,7 @@ export default function Home() {
                   className="w-full cursor-pointer bg-[#12bbef] text-white p-3 text-center rounded-b-md font-medium hover:bg-black hover:text-white transition-all duration-300 flex justify-between items-center"
                 >
                   <span>Busca Avançada</span>
-                  <ArrowRightIcon className="h-5 w-5" />
+                  <ArrowRightIcon className="h-5 w-5" style={{ width: '20px', height: '20px' }} />
                 </button>
               </div>
             )}
