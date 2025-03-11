@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import { XIcon } from 'lucide-react';
 
 type SearchResultItem = {
   titulo: string;
@@ -8,11 +9,13 @@ type SearchResultItem = {
 export default function Home() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResultItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
 
     if (e.target.value.length > 2) {
+      setLoading(true);
       try {
         const response = await fetch(`/api/search?q=${e.target.value}`);
         const data = await response.json();
@@ -20,10 +23,17 @@ export default function Home() {
       } catch (error) {
         console.error('Error fetching search results:', error);
         setResults([]);
+      } finally {
+        setLoading(false);
       }
     } else {
       setResults([]);
     }
+  };
+
+  const clearSearch = () => {
+    setQuery('');
+    setResults([]);
   };
 
   return (
@@ -38,19 +48,34 @@ export default function Home() {
               type="text"
               value={query}
               onChange={handleSearch}
-              className="w-full p-3 border text-black border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border text-black border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
               placeholder="O que você procura?"
             />
+            {/* X Icon to Clear Search */}
+            {query.length > 0 && (
+              <button
+                onClick={clearSearch}
+                className="absolute inset-y-0 right-3 flex items-center"
+              >
+                <XIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition" />
+              </button>
+            )}
 
             {/* Results Box */}
-            {results.length > 0 && (
+            {(query.length > 2 || loading) && (
               <div className="absolute w-full mt-2 bg-white text-black rounded-md shadow-lg">
                 <ul className="divide-y divide-gray-200 max-h-72 overflow-y-auto">
-                  {results.map((item, index) => (
-                    <li key={index} className="p-3 hover:bg-gray-100 cursor-pointer">
-                      {item.titulo}
-                    </li>
-                  ))}
+                  {loading ? (
+                    <div className="flex justify-center items-center py-2">
+                      <div className="loader ease-linear rounded-full border-t-4 border-gray-200 h-6 w-6"></div>
+                    </div>
+                  ) : (
+                    results.map((item, index) => (
+                      <li key={index} className="p-3 hover:bg-gray-100 cursor-pointer">
+                        {item.titulo}
+                      </li>
+                    ))
+                  )}
                 </ul>
 
                 {/* Fixed Bottom Button */}
