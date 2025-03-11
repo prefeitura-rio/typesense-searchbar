@@ -51,6 +51,7 @@ export default function Home() {
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white mx-2">
           <h1 className="text-xl mx-10 md:text-3xl font-bold mb-4 text-center">A Prefeitura do Rio mais perto de você</h1>
           <div className="relative w-full max-w-md">
+            {/* SearchBox */}
             <input
               type="text"
               value={query}
