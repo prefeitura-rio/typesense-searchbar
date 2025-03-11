@@ -21,3 +21,13 @@
   }
 }
 
+#my-nextjs-header .results-box {
+  position: absolute;
+  top: 100%;
+  /* Align with the bottom of the search input */
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  /* Ensure it overlays other content */
+  /* Additional styles for visibility */
+}
