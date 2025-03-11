@@ -8,9 +8,9 @@
   headerContainer.style.zIndex = '9999';
   headerContainer.style.pointerEvents = 'none'; // Allow clicks to pass through initially
 
-  // Load your Next.js app
+  // Load your custom script
   const appScript = document.createElement('script');
-  appScript.src = 'https://typesense-searchbar.vercel.app/_next/static/chunks/embed.js'; // Update with actual path
+  appScript.src = 'https://typesense-searchbar.vercel.app/embed.js'; // Update with your actual Vercel URL
   appScript.onload = () => {
     headerContainer.style.pointerEvents = 'auto'; // Enable interactions after loading
   };
