@@ -38,14 +38,14 @@ export default function Home() {
               type="text"
               value={query}
               onChange={handleSearch}
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Search..."
+              className="w-full p-3 border text-black border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="O que você procura?"
             />
 
             {/* Results Box */}
             {results.length > 0 && (
-              <div className="absolute w-full mt-2 bg-white text-black rounded-md shadow-lg max-h-60 overflow-y-auto">
-                <ul className="divide-y divide-gray-200">
+              <div className="absolute w-full mt-2 bg-white text-black rounded-md shadow-lg">
+                <ul className="divide-y divide-gray-200 max-h-72 overflow-y-auto">
                   {results.map((item, index) => (
                     <li key={index} className="p-3 hover:bg-gray-100 cursor-pointer">
                       {item.titulo}
@@ -54,7 +54,7 @@ export default function Home() {
                 </ul>
 
                 {/* Fixed Bottom Button */}
-                <button className="w-full bg-blue-600 text-white p-3 text-center font-medium hover:bg-blue-700 sticky bottom-0">
+                <button className="w-full bg-blue-600 text-white p-3 text-center rounded-b-md font-medium hover:bg-blue-700">
                   Busca Avançada
                 </button>
               </div>
