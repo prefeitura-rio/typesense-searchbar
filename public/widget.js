@@ -6,7 +6,7 @@
     const doc = document.currentScript;
     if (!doc) return;
     const src = doc.getAttribute("src");
-    const srcIframe = src.slice(0, src.lastIndexOf("/")) + "/widget";
+    const srcIframe = src.slice(0, src.lastIndexOf("/"));
     const iFrame = document.createElement("iframe");
     iFrame.id = iframeWidget;
     iFrame.style.width = "300px";
