@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XIcon, ArrowRightIcon, ExternalLinkIcon } from 'lucide-react';
 
 type SearchResultItem = {
@@ -12,6 +12,11 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResultItem[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Sempre que os resultados mudarem, envie para o site pai
+    window.parent.postMessage({ query, results }, '*');
+  }, [query, results]);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -44,7 +49,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative">
+    <div id="widget" className="relative">
       {/* Fixed Header */}
       <div className="fixed top-0 left-0 w-full bg-cover bg-center z-50" style={{ backgroundImage: "url('./header.png')", height: '220px' }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
