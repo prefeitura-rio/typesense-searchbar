@@ -1,15 +1,15 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Header from "./app/page"
+import ReactDOM from "react-dom/client";
+import Header from "./components/Header"; // ✅ Correct import
 
 class SharedHeader extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: "open" });
+    const container = document.createElement("div");
+    shadowRoot.appendChild(container);
 
-    const mountPoint = document.createElement("div");
-    shadowRoot.appendChild(mountPoint);
-
-    ReactDOM.render(<Header />, mountPoint);
+    const root = ReactDOM.createRoot(container);
+    root.render(<Header />);
   }
 }
 
